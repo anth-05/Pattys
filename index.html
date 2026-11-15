@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Patty's Suri Drinks — Surinaamse drankjes in bulk</title>
+<meta name="description" content="Authentieke Surinaamse gemberbier, markoesa, zuurwater en cola-limonade. Bestel in bulk: hoe meer je haalt, hoe lager de prijs per fles.">
+<meta name="theme-color" content="#0B4228">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Karla:wght@400;500;700&family=Caveat:wght@600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #F6F4E4; -webkit-font-smoothing: antialiased; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  section[id] { scroll-margin-top: 10px; }
+  a { color: #0B4228; text-decoration: none; }
+  a:hover { color: #C9970A; }
+  image-slot { --slot-bg: #E7E3CE; }
+  button { font: inherit; }
+  .todo { background: #FFF3B0; border: 1px dashed #C9970A; color: #5A4300; padding: 1px 7px; border-radius: 6px; font-size: 0.92em; font-weight: 700; }
+  .pill-btn { border: 2px solid #0B4228; background: transparent; color: #0B4228; border-radius: 999px; padding: 7px 14px; font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; cursor: pointer; }
+  .pill-btn.on { background: #0B4228; color: #FFFFFF; }
+  .step-btn { width: 36px; height: 36px; border-radius: 999px; border: none; background: #E7E3CE; color: #0B4228; font-size: 18px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .step-btn:hover { background: #FFD029; }
+  .qty-input { width: 54px; height: 36px; text-align: center; border: 2px solid #E0DCC4; border-radius: 10px; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; color: #0B4228; background: #FFFFFF; -moz-appearance: textfield; }
+  .qty-input::-webkit-outer-spin-button, .qty-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+  .faq { border-bottom: 1px solid #D9D5BC; padding: 18px 0; }
+  .faq summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 20px; font-family: Nunito, sans-serif; font-weight: 800; font-size: 17px; color: #0B4228; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; font-size: 22px; line-height: 1; color: #C9970A; }
+  .faq[open] summary::after { content: "\2212"; }
+  .faq p { margin: 12px 0 0; font-size: 15px; line-height: 1.7; color: #47563C; }
+  .tier-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .tier-table th { text-align: left; font-family: Nunito, sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.08em; color: #FFD029; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.2); }
+  .tier-table td { padding: 12px; color: rgba(255,255,255,0.9); border-bottom: 1px solid rgba(255,255,255,0.1); white-space: nowrap; }
+  .tier-table td:first-child { font-family: Nunito, sans-serif; font-weight: 800; color: #FFFFFF; }
+  .nut-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 12px; }
+  .nut-table th, .nut-table td { text-align: left; padding: 7px 10px; border-bottom: 1px solid #E0DCC4; color: #3F5A38; }
+  .nut-table th { font-family: Nunito, sans-serif; font-weight: 800; color: #0B4228; background: #EDEAD3; }
+  /* 3D knoppen */
+  .b3d { position: relative; transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease; box-shadow: inset 0 2px 0 rgba(255,255,255,0.35), inset 0 -2px 0 rgba(0,0,0,0.08), 0 5px 0 var(--edge, #03200E), 0 10px 20px rgba(0,0,0,0.18); }
+  .b3d:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: inset 0 2px 0 rgba(255,255,255,0.35), inset 0 -2px 0 rgba(0,0,0,0.08), 0 7px 0 var(--edge, #03200E), 0 16px 26px rgba(0,0,0,0.22); }
+  .b3d:active { transform: translateY(4px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 1px 0 var(--edge, #03200E), 0 3px 6px rgba(0,0,0,0.2); }
+  .b3d-y { --edge: #A87F00; }
+  .b3d-g { --edge: #021A0C; }
+  .b3d-o { --edge: #0B4228; background: #FFFFFF !important; }
+  .b3d-ow { --edge: rgba(0,0,0,0.5); background: rgba(255,255,255,0.1) !important; }
+  .pill-btn, .step-btn, .tier-chip { transition: transform 0.1s ease, box-shadow 0.1s ease; }
+  .pill-btn { box-shadow: inset 0 2px 0 rgba(255,255,255,0.6), 0 3px 0 #0B4228; background: #FFFFFF; }
+  .pill-btn.on { box-shadow: inset 0 2px 0 rgba(255,255,255,0.18), 0 3px 0 #021A0C, 0 6px 10px rgba(0,0,0,0.15); }
+  .step-btn { box-shadow: inset 0 2px 0 rgba(255,255,255,0.7), 0 3px 0 #B9B398, 0 5px 8px rgba(0,0,0,0.1); }
+  .pill-btn:hover, .step-btn:hover, .tier-chip:hover { transform: translateY(-1px); }
+  .pill-btn:active, .step-btn:active, .tier-chip:active { transform: translateY(3px); box-shadow: 0 0 0 #000; }
+  .tier-chip { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: 1px; border: 2px solid #D9D5BC; background: #FFFFFF; border-radius: 14px; padding: 8px 8px; cursor: pointer; text-align: left; box-shadow: inset 0 2px 0 rgba(255,255,255,0.8), 0 3px 0 #D9D5BC; }
+  .tier-chip b { font-family: Nunito, sans-serif; font-weight: 900; font-size: 14px; white-space: nowrap; color: #0B4228; }
+  .tier-chip small { font-size: 11px; white-space: nowrap; color: #6B7A4F; }
+  .tier-chip.on { border-color: #0B4228; background: #FFD029; box-shadow: inset 0 2px 0 rgba(255,255,255,0.5), 0 3px 0 #0B4228, 0 6px 12px rgba(0,0,0,0.15); }
+  .tier-chip.on small { color: #0B4228; }
+  .arrow3d { box-shadow: inset 0 2px 0 rgba(255,255,255,0.9), 0 3px 0 rgba(0,0,0,0.35), 0 6px 12px rgba(0,0,0,0.25); }
+  @media (max-width: 900px) {
+    .g-stack { grid-template-columns: minmax(0, 1fr) !important; }
+    .hide-sm { display: none !important; }
+    .hero-bottle { height: 320px !important; }
+    .t-left-sm { text-align: left !important; white-space: normal !important; }
+  }
+
+  .shop-card { position: relative; display: flex; flex-direction: column; border-radius: 22px; overflow: hidden; background: #F6F4E4; border: 1px solid #E7E3CE; }
+  .shop-inner { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
+  .save-badge { position: absolute; top: 22px; right: 18px; background: #C8102E; color: #FFFFFF; font-family: Nunito, sans-serif; font-weight: 900; font-size: 13px; padding: 6px 11px; border-radius: 999px; box-shadow: 0 3px 0 #7A0A1C; }
+  .mini-bottle { flex: none; width: 34px; height: 84px; }
+  .mini-label { font-family: Nunito, sans-serif; font-weight: 800; font-size: 11px; letter-spacing: 0.16em; color: #6B7A4F; margin-bottom: 8px; }
+  .hint-box { background: #EDEAD3; border-radius: 12px; padding: 10px 12px; }
+  .bar { height: 8px; border-radius: 999px; background: #D9D5BC; margin-top: 8px; overflow: hidden; box-shadow: inset 0 1px 2px rgba(0,0,0,0.15); }
+  .bar > div { height: 100%; background: linear-gradient(90deg, #FFD029, #E8A800); border-radius: 999px; transition: width 0.25s ease; }
+  .add-btn { margin-top: auto; display: inline-flex; align-items: center; justify-content: center; gap: 10px; border: none; cursor: pointer; background: #0B4228; color: #FFFFFF; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 15px 20px; border-radius: 999px; }
+  .cta-y { display: inline-flex; align-items: center; gap: 10px; background: #FFD029; color: #0B4228 !important; font-family: Nunito, sans-serif; font-weight: 800; font-size: 16px; padding: 16px 24px; border-radius: 999px; }
+  .ghost-btn { width: 100%; margin-top: 14px; border: 2px solid #0B4228; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 14px; padding: 12px 18px; border-radius: 999px; cursor: pointer; }
+  .link-btn { margin-left: 8px; border: none; background: none; color: #8A6A10; font-size: 13px; text-decoration: underline; cursor: pointer; }
+  .step-btn.sm { width: 30px; height: 30px; font-size: 15px; }
+  .cart-line { display: flex; gap: 14px; align-items: center; padding: 14px 0; border-bottom: 1px solid #E0DCC4; }
+  .upsell { display: flex; align-items: center; gap: 8px; margin-top: 10px; background: #FFF3B0; border-radius: 10px; padding: 6px 8px 6px 10px; font-size: 12px; color: #5A4300; font-weight: 700; }
+  .tier-chip.up { flex: none; padding: 4px 10px; flex-direction: row; font-family: Nunito, sans-serif; font-weight: 900; font-size: 12px; color: #0B4228; }
+  .story-dot { position: absolute; left: -53px; top: 0; width: 36px; height: 36px; border-radius: 999px; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 900; font-size: 15px; display: inline-flex; align-items: center; justify-content: center; border: 4px solid #F6F4E4; }
+  .bottle-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .bottle-slot { position: absolute; inset: 22px 0 92px; display: flex; justify-content: center; pointer-events: none; }
+  .bottle-slot .bottle-svg { width: auto; filter: drop-shadow(0 18px 24px rgba(0,0,0,0.35)); transition: transform 0.35s ease; }
+  a:hover .bottle-slot .bottle-svg { transform: translateY(-8px) rotate(-3deg); }
+  .bottle-group { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; gap: 0; }
+  .bottle-group .gb { height: 86%; width: 30%; max-width: 170px; filter: drop-shadow(0 24px 30px rgba(0,0,0,0.4)); }
+  .bottle-group .gb0 { transform: translate(18%, -2%) rotate(-8deg); height: 74%; }
+  .bottle-group .gb1 { z-index: 2; }
+  .bottle-group .gb2 { transform: translate(-18%, -2%) rotate(8deg); height: 74%; }
+  .cta-bottles { inset: 12% 6% 8%; }
+  .cta-bottles .gb { height: 80%; width: 24%; }
+  .cta-bottles .gb0, .cta-bottles .gb3 { height: 66%; }
+  .cta-bottles .gb2 { transform: rotate(5deg); height: 74%; }
+  .cta-bottles .gb3 { transform: translate(-14%, 0) rotate(10deg); }
+  .ing-circle { width: 100%; aspect-ratio: 1; border-radius: 999px; background: radial-gradient(circle at 35% 30%, #FFFFFF 0%, #E7E3CE 75%); display: flex; align-items: center; justify-content: center; padding: 14% 0; box-shadow: inset 0 -6px 0 rgba(0,0,0,0.05); }
+  .ing-circle .bottle-svg { width: auto; height: 100%; }
+  .social-tile { position: relative; height: 150px; border-radius: 10px; overflow: hidden; }
+  .social-tile .bottle-slot { inset: 14px 0 34px; }
+  .social-tile span { position: absolute; left: 10px; right: 10px; bottom: 10px; color: #FFFFFF; font-size: 12px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #toast { position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 140%); background: #0B4228; color: #FFFFFF; border-radius: 999px; padding: 10px 10px 10px 20px; display: flex; gap: 14px; align-items: center; font-size: 14px; font-weight: 700; z-index: 70; box-shadow: 0 6px 0 #021A0C, 0 16px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; max-width: calc(100% - 24px); }
+  #toast { visibility: hidden; }
+  #toast.show { transform: translate(-50%, 0); visibility: visible; }
+  #toast button { border: none; cursor: pointer; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; padding: 9px 14px; border-radius: 999px; white-space: nowrap; }
+  #fab { position: fixed; right: 20px; bottom: 20px; z-index: 55; display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 14px 20px; border-radius: 999px; opacity: 0; pointer-events: none; transform: translateY(20px); transition: opacity 0.25s, transform 0.25s; }
+  #fab.show { opacity: 1; pointer-events: auto; transform: none; }
+  #fab b { min-width: 26px; height: 26px; padding: 0 7px; border-radius: 999px; background: #0B4228; color: #FFD029; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; }
+  :focus-visible { outline: 3px solid #FFD029; outline-offset: 3px; }
+  .skip { position: absolute; left: -999px; top: 8px; z-index: 80; background: #FFD029; color: #0B4228; padding: 10px 16px; border-radius: 999px; font-weight: 800; }
+  .skip:focus { left: 8px; }
+  @media (max-width: 640px) {
+    .flavor-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; }
+    .flavor-grid > a { height: 300px !important; }
+    .flavor-grid .bottle-slot { inset: 16px 0 96px; }
+    .flavor-grid > a > div:last-child { inset: auto 12px 14px 14px !important; }
+    .flavor-grid > a > div:last-child > span { display: none !important; }
+    .flavor-grid > a > div:last-child div:nth-child(2) { font-size: 19px !important; }
+    .steps-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  }
+  @media (max-width: 900px) {
+    .bottle-group .gb { width: 26%; }
+    #toast { bottom: 84px; }
+  }
+
+</style>
+</head>
+<body>
+<a class="skip" href="#bestel">Direct naar bulk bestellen</a>
+<main id="top" style="font-family: Karla, system-ui, sans-serif; color: #123A24; overflow: hidden; background: #F6F4E4">
+
+  <!-- ============ HERO ============ -->
+  <section style="position: relative; min-height: 760px; display: flex; flex-direction: column; background: #0B4228; padding-bottom: 90px">
+    <div data-parallax="0.28" style="position: absolute; inset: -14% 0; will-change: transform">
+      <img src="assets/hero.jpg" alt="Surinaamse rivier met palmbomen" style="width: 100%; height: 100%; object-fit: cover; display: block" />
+    </div>
+    <div style="position: absolute; inset: 0; background: linear-gradient(100deg, rgba(8,44,26,0.92) 0%, rgba(8,44,26,0.66) 42%, rgba(8,44,26,0.15) 70%, rgba(8,44,26,0.05) 100%); pointer-events: none"></div>
+
+    <header style="position: relative; display: flex; align-items: center; justify-content: space-between; gap: 32px; padding: 26px clamp(20px, 5vw, 64px); flex-wrap: wrap">
+      <a href="#top" aria-label="Patty's Suri Drinks, naar boven" style="display: flex; flex-direction: column; gap: 2px">
+        <span style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 36px; line-height: 1; color: #FFFFFF; letter-spacing: -0.02em">Patty's</span>
+        <span style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.28em; color: #FFD029">SURI DRINKS</span>
+      </a>
+      <nav style="display: flex; align-items: center; gap: 26px; flex-wrap: wrap">
+        <a href="#smaken" class="hide-sm" style="color: rgba(255,255,255,0.92); font-weight: 500; font-size: 15px">Onze smaken</a>
+        <a href="#bestel" class="hide-sm" style="color: #FFD029; font-weight: 700; font-size: 15px">Bulk bestellen</a>
+        <a href="#verhaal" class="hide-sm" style="color: rgba(255,255,255,0.92); font-weight: 500; font-size: 15px">Ons verhaal</a>
+        <a href="#zakelijk" class="hide-sm" style="color: rgba(255,255,255,0.92); font-weight: 500; font-size: 15px">Staffelprijzen</a>
+        <a href="#info" class="hide-sm" style="color: rgba(255,255,255,0.92); font-weight: 500; font-size: 15px">Contact</a>
+        <button class="b3d b3d-y" type="button" data-act="open-cart" style="display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 14px 22px; border-radius: 999px">Winkelwagen <span id="cart-count" style="min-width: 26px; height: 26px; padding: 0 7px; border-radius: 999px; background: #0B4228; color: #FFD029; display: inline-flex; align-items: center; justify-content: center; font-size: 13px">0</span></button>
+      </nav>
+    </header>
+
+    <div class="g-stack" style="position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr); gap: 24px; align-items: center; padding: 40px clamp(20px, 5vw, 64px) 0; flex: 1">
+      <div style="max-width: 640px">
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #FFD029; margin-bottom: 18px">AUTHENTIEK SURINAAMS &middot; IN BULK VOORDELIGER</div>
+        <h1 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(46px, 6vw, 80px); line-height: 0.98; letter-spacing: -0.035em; color: #FFFFFF; margin: 0 0 26px">Zoet. Koud.<br /><span style="color: #FFD029">Onweer&shy;staanbaar.</span></h1>
+        <p style="font-size: 17px; line-height: 1.65; color: rgba(255,255,255,0.9); max-width: 460px; margin: 0 0 34px; text-wrap: pretty">Gemberbier, markoesa, zuurwater en cola-limonade volgens Patty's eigen familierecepten. Haal ze in bulk voor je feest, event of zaak: hoe meer je haalt, hoe lager de prijs per fles.</p>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap; margin: -12px 0 32px">
+          <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); border-radius: 16px; padding: 12px 16px; color: #FFFFFF"><div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; color: #FFD029; line-height: 1">tot &minus;54%</div><div style="font-size: 13px; margin-top: 4px; opacity: 0.85">per fles in bulk</div></div>
+          <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); border-radius: 16px; padding: 12px 16px; color: #FFFFFF"><div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; color: #FFD029; line-height: 1">&euro;1,25</div><div style="font-size: 13px; margin-top: 4px; opacity: 0.85">laagste prijs per flesje</div></div>
+          <div style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.22); border-radius: 16px; padding: 12px 16px; color: #FFFFFF"><div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; color: #FFD029; line-height: 1">5 liter</div><div style="font-size: 13px; margin-top: 4px; opacity: 0.85">jerrycans voor events</div></div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 22px; flex-wrap: wrap">
+          <a class="b3d b3d-y" href="#bestel" style="display: inline-flex; align-items: center; gap: 12px; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 16px; padding: 17px 30px; border-radius: 999px">Bestel in bulk <span>&#8594;</span></a>
+          <a href="#zakelijk" style="display: inline-flex; align-items: center; gap: 14px; color: #FFFFFF; font-weight: 700; font-size: 15px">
+            <span class="arrow3d" style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 17px">&#8364;</span>
+            Bekijk staffelprijzen
+          </a>
+        </div>
+      </div>
+      <div class="hero-bottle" data-parallax="-0.12" style="position: relative; height: 460px; min-width: 0; will-change: transform">
+        <div class="bottle-group" data-bottles="markoesa,gember,zuurwater"></div>
+      </div>
+    </div>
+
+    <div style="position: absolute; left: -4%; right: -4%; bottom: -52px; height: 120px; background: #F6F4E4; border-radius: 50% 50% 0 0 / 100% 100% 0 0"></div>
+  </section>
+
+  <!-- ============ SMAKEN ============ -->
+  <section id="smaken" style="position: relative; background: #F6F4E4; padding: 26px clamp(20px, 5vw, 64px) 86px">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: 40px; align-items: end; margin-bottom: 40px">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #6B7A4F; margin-bottom: 16px">ONZE SMAKEN</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(34px, 4vw, 50px); line-height: 1.02; letter-spacing: -0.03em; color: #0B4228; margin: 0">Vier smaken.<br />Echt Surinaams.</h2>
+      </div>
+      <p style="font-size: 16px; line-height: 1.7; color: #47563C; margin: 0; max-width: 380px; text-wrap: pretty">Van tropisch zoete passievrucht tot pittige gember: we maken elke fles zoals we 'm zelf willen drinken. Ontdek jouw favoriet.</p>
+    </div>
+
+    <div class="flavor-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 22px">
+      <a href="#bestel" style="position: relative; display: block; height: 420px; border-radius: 22px; overflow: hidden; background: #5B1E58">
+        <div class="bottle-slot" data-bottle="markoesa"></div>
+        <span style="position: absolute; top: 18px; left: 18px; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 12px; padding: 6px 12px; border-radius: 999px; pointer-events: none">Bestseller</span>
+        <div style="position: absolute; inset: auto 0 0 0; height: 60%; background: linear-gradient(to top, rgba(30,6,30,0.85), rgba(30,6,30,0)); pointer-events: none"></div>
+        <div style="position: absolute; inset: auto 20px 20px 22px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; pointer-events: none">
+          <div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 4px">Proef de zon!</div>
+            <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; color: #FFFFFF; line-height: 1.1">Markoesa</div>
+            <div style="font-size: 13px; color: #FFD029; font-weight: 700; margin-top: 4px">vanaf &euro;1,70 p/fles in bulk</div>
+          </div>
+          <span style="flex: none; width: 40px; height: 40px; border-radius: 999px; background: #FFFFFF; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 16px" class="arrow3d">&#8594;</span>
+        </div>
+      </a>
+      <a href="#bestel" style="position: relative; display: block; height: 420px; border-radius: 22px; overflow: hidden; background: #7FA02E">
+        <div class="bottle-slot" data-bottle="zuurwater"></div>
+        <div style="position: absolute; inset: auto 0 0 0; height: 60%; background: linear-gradient(to top, rgba(28,44,4,0.8), rgba(28,44,4,0)); pointer-events: none"></div>
+        <div style="position: absolute; inset: auto 20px 20px 22px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; pointer-events: none">
+          <div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 4px">Heerlijk verfrissend!</div>
+            <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; color: #FFFFFF; line-height: 1.1">Zuurwater</div>
+            <div style="font-size: 13px; color: #FFD029; font-weight: 700; margin-top: 4px">vanaf &euro;1,50 p/fles in bulk</div>
+          </div>
+          <span style="flex: none; width: 40px; height: 40px; border-radius: 999px; background: #FFFFFF; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 16px" class="arrow3d">&#8594;</span>
+        </div>
+      </a>
+      <a href="#bestel" style="position: relative; display: block; height: 420px; border-radius: 22px; overflow: hidden; background: #6E1616">
+        <div class="bottle-slot" data-bottle="cola"></div>
+        <div style="position: absolute; inset: auto 0 0 0; height: 60%; background: linear-gradient(to top, rgba(30,4,4,0.85), rgba(30,4,4,0)); pointer-events: none"></div>
+        <div style="position: absolute; inset: auto 20px 20px 22px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; pointer-events: none">
+          <div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 4px">Cola. Maar dan beter.</div>
+            <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; color: #FFFFFF; line-height: 1.1">Cola-limonade</div>
+            <div style="font-size: 13px; color: #FFD029; font-weight: 700; margin-top: 4px">vanaf &euro;1,25 p/fles in bulk</div>
+          </div>
+          <span style="flex: none; width: 40px; height: 40px; border-radius: 999px; background: #FFFFFF; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 16px" class="arrow3d">&#8594;</span>
+        </div>
+      </a>
+      <a href="#bestel" style="position: relative; display: block; height: 420px; border-radius: 22px; overflow: hidden; background: #D2501A">
+        <div class="bottle-slot" data-bottle="gember"></div>
+        <span style="position: absolute; top: 18px; left: 18px; background: #FFFFFF; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 12px; padding: 6px 12px; border-radius: 999px; pointer-events: none">0% alcohol</span>
+        <div style="position: absolute; inset: auto 0 0 0; height: 60%; background: linear-gradient(to top, rgba(60,18,4,0.8), rgba(60,18,4,0)); pointer-events: none"></div>
+        <div style="position: absolute; inset: auto 20px 20px 22px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; pointer-events: none">
+          <div>
+            <div style="font-size: 13px; color: rgba(255,255,255,0.85); margin-bottom: 4px">Fris, kruidig &amp; pittig</div>
+            <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; color: #FFFFFF; line-height: 1.1">Gemberbier</div>
+            <div style="font-size: 13px; color: #FFD029; font-weight: 700; margin-top: 4px">vanaf &euro;1,50 p/fles in bulk</div>
+          </div>
+          <span style="flex: none; width: 40px; height: 40px; border-radius: 999px; background: #FFFFFF; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 16px" class="arrow3d">&#8594;</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ============ BULK BESTELLEN ============ -->
+  <section id="bestel" style="background: #FFFFFF; padding: 80px clamp(20px, 5vw, 64px)">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: 40px; align-items: end; margin-bottom: 30px">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #6B7A4F; margin-bottom: 16px">BULK BESTELLEN</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(34px, 4vw, 50px); line-height: 1.02; letter-spacing: -0.03em; color: #0B4228; margin: 0">Hoe meer je haalt,<br />hoe minder je betaalt.</h2>
+      </div>
+      <p style="font-size: 16px; line-height: 1.7; color: #47563C; margin: 0; max-width: 400px; text-wrap: pretty">Kies een smaak, een formaat en een bulkpakket. De staffelprijs wordt direct verrekend, en je ziet meteen hoeveel je bespaart.</p>
+    </div>
+
+    <div class="steps-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 34px">
+      <div style="display: flex; gap: 12px; align-items: center; background: #F6F4E4; border-radius: 16px; padding: 14px 16px"><span style="flex: none; width: 38px; height: 38px; border-radius: 999px; background: #FFD029; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">1</span><div style="font-size: 14px; color: #0B4228"><b>Kies je smaak</b><br /><span style="color: #6B7A4F">4 Surinaamse klassiekers</span></div></div>
+      <div style="display: flex; gap: 12px; align-items: center; background: #F6F4E4; border-radius: 16px; padding: 14px 16px"><span style="flex: none; width: 38px; height: 38px; border-radius: 999px; background: #FFD029; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">2</span><div style="font-size: 14px; color: #0B4228"><b>Kies je formaat</b><br /><span style="color: #6B7A4F">330 ml, 1 liter of 5 liter</span></div></div>
+      <div style="display: flex; gap: 12px; align-items: center; background: #F6F4E4; border-radius: 16px; padding: 14px 16px"><span style="flex: none; width: 38px; height: 38px; border-radius: 999px; background: #FFD029; color: #0B4228; display: inline-flex; align-items: center; justify-content: center; font-weight: 900">3</span><div style="font-size: 14px; color: #0B4228"><b>Kies je bulkpakket</b><br /><span style="color: #6B7A4F">Hoe groter, hoe voordeliger</span></div></div>
+    </div>
+
+    <div id="shop-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px"></div>
+
+    <div style="margin-top: 26px; border-radius: 22px; border: 2px dashed #D9D5BC; padding: 22px; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.1fr); gap: 24px; align-items: center" class="g-stack">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #0B4228">Losse lege flessen</div>
+        <p style="font-size: 14px; line-height: 1.55; color: #56664A; margin: 6px 0 0">Extra flessen nodig? Lege flessen inclusief dop. <span class="todo">aanvullen: statiegeld / retour-regeling</span></p>
+      </div>
+      <div id="empties" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px"></div>
+    </div>
+  </section>
+
+  <!-- ============ ZAKELIJK (nieuw) ============ -->
+  <section id="zakelijk" style="background: #0B4228; padding: 80px clamp(20px, 5vw, 64px)">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(36px, 5vw, 64px); align-items: center">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #FFD029; margin-bottom: 16px">STAFFELPRIJZEN &middot; ZAKELIJK</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; letter-spacing: -0.03em; color: #FFFFFF; margin: 0 0 18px">Grote aantallen.<br />Kleine prijzen.</h2>
+        <p style="font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.86); margin: 0 0 16px; max-width: 420px; text-wrap: pretty">Van snackmobiel tot marktkraam: Patty's wordt al door ondernemers verkocht. Hoe meer je bestelt, hoe lager de prijs per stuk. De 5-liter jerrycans zijn ideaal voor feesten, catering en horeca.</p>
+        <ul style="margin: 0 0 30px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; color: #FFFFFF; font-size: 15px">
+          <li>&#10003;&nbsp; Staffelprijzen, automatisch verrekend</li>
+          <li>&#10003;&nbsp; Flessen van 330 ml, 1 liter en 5 liter</li>
+          <li>&#10003;&nbsp; Grote bestelling of event? We denken mee</li>
+          <li>&#10003;&nbsp; Ideaal voor snackbars, markten, catering en feesten</li>
+        </ul>
+        <div style="display: flex; gap: 14px; flex-wrap: wrap">
+          <a class="b3d b3d-y" href="mailto:info@pattysurishop.nl?subject=Offerte%20aanvraag%20Patty's%20Suri%20Drinks" style="display: inline-flex; align-items: center; gap: 12px; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 15px 26px; border-radius: 999px">Vraag een offerte aan <span>&#8594;</span></a>
+          <span style="align-self: center; font-size: 13px; color: rgba(255,255,255,0.75)">of mail info@pattysurishop.nl</span>
+          <a class="b3d b3d-ow" href="#bestel" style="display: inline-flex; align-items: center; gap: 12px; border: 2px solid rgba(255,255,255,0.6); color: #FFFFFF; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 13px 24px; border-radius: 999px">Direct bestellen</a>
+        </div>
+      </div>
+      <div style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.14); border-radius: 22px; padding: 20px 20px 14px; overflow-x: auto">
+        <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #FFFFFF; margin: 0 0 8px 12px">Staffelprijzen per stuk</div>
+        <table class="tier-table">
+          <thead>
+            <tr><th></th><th>330ml<br />1&ndash;29</th><th>330ml<br />30+</th><th>330ml<br />181+</th><th>1 L<br />1&ndash;23</th><th>1 L<br />24+</th><th>1 L<br />121+</th><th>5 L<br />1&ndash;5</th><th>5 L<br />6+</th><th>5 L<br />21+</th></tr>
+          </thead>
+          <tbody id="tier-rows"></tbody>
+        </table>
+        <p style="font-size: 12px; color: rgba(255,255,255,0.65); margin: 12px 12px 0">* Gemberbier 330 ml: &euro;1,80 bij 30&ndash;90 stuks, &euro;1,60 bij 91&ndash;180 stuks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA ============ -->
+  <section class="g-stack" style="display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); background: #0B4228">
+    <div style="position: relative; min-height: 420px; overflow: hidden">
+      <div data-parallax="0.22" style="position: absolute; inset: -12% 0; will-change: transform">
+        <div style="position: absolute; inset: 0; background: radial-gradient(circle at 50% 60%, #1E6B43 0%, #0B4228 70%)"></div><div class="bottle-group cta-bottles" data-bottles="zuurwater,markoesa,gember,cola"></div>
+      </div>
+    </div>
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 30px; align-items: center; padding: clamp(40px, 5vw, 70px)">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #FFD029; margin-bottom: 16px">SURI GOOD VIBES</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(32px, 3.6vw, 46px); line-height: 1.05; letter-spacing: -0.03em; color: #FFFFFF; margin: 0 0 18px">Feestje of event?<br />Haal 'm in bulk.</h2>
+        <p style="font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.86); margin: 0 0 30px; max-width: 460px; text-wrap: pretty">Verjaardag, barbecue, bruiloft of eigen zaak: met een jerrycan van 5 liter of een pakket van 181 flesjes zit je goed, en betaal je de laagste prijs per fles.</p>
+        <a class="b3d b3d-y" href="#bestel" style="display: inline-flex; align-items: center; gap: 12px; background: #FFD029; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 16px; padding: 17px 32px; border-radius: 999px">Bestel in bulk <span>&#8594;</span></a>
+      </div>
+      <div class="t-left-sm" style="font-family: Caveat, cursive; font-size: 26px; line-height: 1.25; color: #FFD029; text-align: right; white-space: nowrap">Meer halen.<br />Minder betalen.</div>
+    </div>
+  </section>
+
+  <!-- ============ INGREDIËNTEN ============ -->
+  <section style="background: #F6F4E4; padding: 84px clamp(20px, 5vw, 64px)">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: clamp(36px, 5vw, 70px); align-items: center">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #6B7A4F; margin-bottom: 16px">ONZE INGREDI&Euml;NTEN</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; letter-spacing: -0.03em; color: #0B4228; margin: 0 0 20px">Echte ingredi&euml;nten.<br />Geen shortcuts.</h2>
+        <p style="font-size: 16px; line-height: 1.75; color: #47563C; margin: 0 0 30px; max-width: 420px; text-wrap: pretty">We maken alles in kleine batches, volgens vaste recepten die aan Patty's keukentafel zijn ontstaan. Onze gemberbier trekt twaalf uur met extra veel gemberwortel, en voor de markoesa gebruiken we volle passievruchtpulp.</p>
+        <a class="b3d b3d-o" href="#bestel" style="display: inline-flex; align-items: center; gap: 12px; border: 2px solid #0B4228; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 14px 26px; border-radius: 999px">Bestel je favoriet <span>&#8594;</span></a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 26px">
+        <div style="text-align: center">
+          <div class="ing-circle" data-bottle="markoesa"></div>
+          <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #0B4228; margin: 16px 0 6px">Markoesa</div>
+          <p style="font-size: 14px; line-height: 1.5; color: #56664A; margin: 0">Volle passievruchtpulp, tropisch zoet.</p>
+        </div>
+        <div style="text-align: center">
+          <div class="ing-circle" data-bottle="zuurwater"></div>
+          <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #0B4228; margin: 16px 0 6px">Zuurwater</div>
+          <p style="font-size: 14px; line-height: 1.5; color: #56664A; margin: 0">Fris en zuur, een Surinaamse klassieker.</p>
+        </div>
+        <div style="text-align: center">
+          <div class="ing-circle" data-bottle="cola"></div>
+          <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #0B4228; margin: 16px 0 6px">Cola-limonade</div>
+          <p style="font-size: 14px; line-height: 1.5; color: #56664A; margin: 0">Patty's eigen recept, een Surinaamse twist.</p>
+        </div>
+        <div style="text-align: center">
+          <div class="ing-circle" data-bottle="gember"></div>
+          <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #0B4228; margin: 16px 0 6px">Gemberbier</div>
+          <p style="font-size: 14px; line-height: 1.5; color: #56664A; margin: 0">Verse gemberwortel, 12 uur getrokken.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ROOTS ============ -->
+  <section id="oorsprong" style="background: #DFEBD2; padding: 76px clamp(20px, 5vw, 64px)">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.8fr) minmax(0, 0.8fr); gap: clamp(30px, 4vw, 56px); align-items: center">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #4F7A3E; margin-bottom: 16px">ONZE ROOTS</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; letter-spacing: -0.03em; color: #0B4228; margin: 0 0 18px">Surinaams recept.<br />Hollandse keukentafel.</h2>
+        <p style="font-size: 16px; line-height: 1.75; color: #3F5A38; margin: 0 0 28px; max-width: 390px; text-wrap: pretty">Patty maakte haar gember jarenlang thuis, op z'n Surinaams: een beetje van dit, een beetje van dat. Wat begon voor familie en vrienden, is nu een echt familiebedrijf in Lelystad.</p>
+        <a class="b3d b3d-o" href="#verhaal" style="display: inline-flex; align-items: center; gap: 12px; border: 2px solid #0B4228; color: #0B4228; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 14px 26px; border-radius: 999px">Lees ons verhaal <span>&#8594;</span></a>
+      </div>
+      <div data-parallax="-0.1" style="position: relative; min-height: 260px; display: flex; align-items: center; justify-content: center; will-change: transform">
+        <img src="assets/suriname-map.png" alt="Kaart van Suriname" style="width: 100%; height: 300px; object-fit: contain" />
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 24px">
+        <div style="display: flex; gap: 16px; align-items: flex-start">
+          <span style="flex: none; width: 44px; height: 44px; border-radius: 999px; border: 2px solid #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; color: #0B4228">&#9829;</span>
+          <div>
+            <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 17px; color: #0B4228">Recepten van thuis</div>
+            <div style="font-size: 14px; color: #4C6444; margin-top: 4px">Uit Patty's eigen keuken</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start">
+          <span style="flex: none; width: 44px; height: 44px; border-radius: 999px; border: 2px solid #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; color: #0B4228">&#9201;</span>
+          <div>
+            <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 17px; color: #0B4228">12 uur getrokken</div>
+            <div style="font-size: 14px; color: #4C6444; margin-top: 4px">Pittig en vol van smaak</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 16px; align-items: flex-start">
+          <span style="flex: none; width: 44px; height: 44px; border-radius: 999px; border: 2px solid #0B4228; display: inline-flex; align-items: center; justify-content: center; font-size: 18px; color: #0B4228">&#8962;</span>
+          <div>
+            <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 17px; color: #0B4228">Familiebedrijf</div>
+            <div style="font-size: 14px; color: #4C6444; margin-top: 4px">Ambachtelijk gemaakt in Lelystad</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ONS VERHAAL (nieuw) ============ -->
+  <section id="verhaal" style="background: #F6F4E4; padding: 84px clamp(20px, 5vw, 64px)">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(36px, 5vw, 70px); align-items: start">
+      <div style="position: sticky; top: 30px">
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #6B7A4F; margin-bottom: 16px">ONS VERHAAL</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; letter-spacing: -0.03em; color: #0B4228; margin: 0 0 20px">Gemaakt met liefde.<br />Op z'n Surinaams.</h2>
+        <p style="font-size: 16px; line-height: 1.75; color: #47563C; margin: 0 0 26px; max-width: 400px; text-wrap: pretty">Elk goed recept begint met een moment. Het onze begon op een zomerfestival, met een gemberdrankje dat gewoon niet lekker was.</p>
+        <div style="background: #0B4228; border-radius: 22px; padding: 30px; color: #FFFFFF"><div style="font-family: Caveat, cursive; font-size: 30px; line-height: 1.2; color: #FFD029; margin-bottom: 12px">&ldquo;Geen weegschaal, geen recept, wel altijd lekker.&rdquo;</div><div style="font-size: 14px; color: rgba(255,255,255,0.8)">Over hoe Patty haar gember thuis maakte, voor familie, vrienden en kennissen.</div></div>
+      </div>
+      <div style="position: relative; padding-left: 34px; border-left: 3px solid #D9D5BC; display: flex; flex-direction: column; gap: 36px">
+        <div id="story" style="display: flex; flex-direction: column; gap: 36px"></div>
+        <div style="font-family: Caveat, cursive; font-size: 32px; line-height: 1.2; color: #0B4228">Proef het verhaal.<br />Proef Patty's.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ INFO / FAQ (nieuw) ============ -->
+  <section id="info" style="background: #F6F4E4; padding: 84px clamp(20px, 5vw, 64px)">
+    <div class="g-stack" style="display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr); gap: clamp(36px, 5vw, 64px); align-items: start">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #6B7A4F; margin-bottom: 16px">BESTELLEN &amp; BEZORGEN</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.05; letter-spacing: -0.03em; color: #0B4228; margin: 0 0 18px">Goed om te weten.</h2>
+        <details class="faq">
+          <summary>Bezorgen of ophalen?</summary>
+          <p><span class="todo">aanvullen: bezorggebied, verzendkosten, levertijd en of ophalen in Lelystad mogelijk is</span></p>
+        </details>
+        <details class="faq">
+          <summary>Hoe kan ik betalen?</summary>
+          <p><span class="todo">aanvullen: betaalmethodes, bijv. iDEAL, Bancontact, op factuur voor zakelijk</span></p>
+        </details>
+        <details class="faq">
+          <summary>Hoe werken de staffelprijzen?</summary>
+          <p>Per smaak en per formaat geldt: hoe meer stuks, hoe lager de prijs per stuk. Een flesje markoesa van 330 ml kost &euro;3,50, vanaf 30 stuks &euro;1,80 en vanaf 181 stuks &euro;1,70. De juiste prijs wordt automatisch berekend in je winkelwagen. Bekijk alle prijzen bij <a href="#zakelijk" style="font-weight: 700; text-decoration: underline">Zakelijk</a>.</p>
+        </details>
+        <details class="faq">
+          <summary>Zit er alcohol in?</summary>
+          <p>Nee. Al onze drankjes zijn alcoholvrij, dus ook onze gemberbier: 0% alcohol, 100% smaak.</p>
+        </details>
+        <details class="faq">
+          <summary>Hoe bewaar ik de drankjes?</summary>
+          <p>Het lekkerst ijskoud, dus zet ze in de koelkast. <span class="todo">aanvullen: houdbaarheid ongeopend / na openen</span></p>
+        </details>
+        <details class="faq">
+          <summary>Wat zijn de losse lege flessen?</summary>
+          <p>Losse lege flessen inclusief dop, in 0,33 L (&euro;0,55), 1 L (&euro;0,75) en 5 L (&euro;3,80). <span class="todo">aanvullen: hoe het statiegeld / terugbrengen werkt</span></p>
+        </details>
+        <details class="faq">
+          <summary>Voedingswaarden</summary>
+          <p>Per 100 ml. <span class="todo">aanvullen: markoesa &amp; cola-limonade (staan nu op 0 kcal) en verzadigd vet controleren (hoger dan totaal vet)</span></p>
+          <table class="nut-table">
+            <thead><tr><th></th><th>Gemberbier</th><th>Zuurwater</th></tr></thead>
+            <tbody>
+              <tr><td>Energie</td><td>411 kJ / 97 kcal</td><td>233 kJ / 55 kcal</td></tr>
+              <tr><td>Vetten</td><td>0,2 g</td><td>0,2 g</td></tr>
+              <tr><td>&nbsp;&nbsp;waarvan verzadigd</td><td>0,5 g</td><td>0,5 g</td></tr>
+              <tr><td>Koolhydraten</td><td>24,2 g</td><td>13,7 g</td></tr>
+              <tr><td>&nbsp;&nbsp;waarvan suikers</td><td>19,8 g</td><td>11,4 g</td></tr>
+              <tr><td>Vezels</td><td>1 g</td><td>1 g</td></tr>
+              <tr><td>Eiwitten</td><td>0,2 g</td><td>0,2 g</td></tr>
+              <tr><td>Zout</td><td>0,06 g</td><td>0,06 g</td></tr>
+            </tbody>
+          </table>
+        </details>
+      </div>
+      <aside style="background: #0B4228; color: #FFFFFF; border-radius: 22px; padding: 30px">
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #FFD029; margin-bottom: 14px">CONTACT</div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 24px; line-height: 1.15; margin-bottom: 14px">Vraag? Bestelling op maat?</div>
+        <p style="font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.85); margin: 0 0 22px">We helpen je graag, ook met grote bestellingen voor je feest of zaak.</p>
+        <div style="display: flex; flex-direction: column; gap: 14px; font-size: 15px">
+          <a href="mailto:info@pattysurishop.nl" style="color: #FFFFFF; display: flex; gap: 12px; align-items: center"><span style="color: #FFD029">&#9993;</span> info@pattysurishop.nl</a>
+          <div style="display: flex; gap: 12px; align-items: center"><span style="color: #FFD029">&#9742;</span> <span class="todo">aanvullen: telefoon / WhatsApp</span></div>
+          <div style="display: flex; gap: 12px; align-items: center"><span style="color: #FFD029">&#9906;</span> Lelystad <span class="todo">adres?</span></div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ VOLG ONS ============ -->
+  <section id="volg" style="position: relative; overflow: hidden; background: #0B4228; padding: 70px clamp(20px, 5vw, 64px)">
+    
+    <div class="g-stack" style="position: relative; display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); gap: clamp(30px, 4vw, 54px); align-items: center">
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 13px; letter-spacing: 0.22em; color: #FFD029; margin-bottom: 14px">VOLG ONS</div>
+        <h2 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: clamp(28px, 3.2vw, 40px); line-height: 1.06; letter-spacing: -0.03em; color: #FFFFFF; margin: 0 0 16px">Samen genieten.<br />Deel het moment.</h2>
+        <p style="font-size: 15px; line-height: 1.7; color: rgba(255,255,255,0.85); margin: 0 0 26px; max-width: 360px; text-wrap: pretty">Volg ons voor nieuwe smaken, events, markten waar je ons vindt en de mooiste momenten met Patty's. Tag ons als je proost!</p>
+        <div style="display: flex; gap: 12px">
+          <a class="b3d b3d-ow" href="#volg" title="Instagram — link aanvullen" style="width: 42px; height: 42px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.5); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">IG</a>
+          <a class="b3d b3d-ow" href="#volg" title="Facebook — link aanvullen" style="width: 42px; height: 42px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.5); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">f</a>
+          <a class="b3d b3d-ow" href="#volg" title="TikTok — link aanvullen" style="width: 42px; height: 42px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.5); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">TT</a>
+          <a class="b3d b3d-ow" href="#volg" title="YouTube — link aanvullen" style="width: 42px; height: 42px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.5); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700">YT</a>
+        </div>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 14px">
+        <div class="social-tile" style="background: #5B1E58"><div class="bottle-slot" data-bottle="markoesa"></div><span>#proefdezon</span></div>
+<div class="social-tile" style="background: #7FA02E"><div class="bottle-slot" data-bottle="zuurwater"></div><span>#frisenzuur</span></div>
+<div class="social-tile" style="background: #D2501A"><div class="bottle-slot" data-bottle="gember"></div><span>#12uurgetrokken</span></div>
+<div class="social-tile" style="background: #6E1616"><div class="bottle-slot" data-bottle="cola"></div><span>#colamaardanbeter</span></div>
+<div class="social-tile" style="background: #E8B305"><div class="bottle-slot" data-bottle="markoesa"></div><span>#pattyssuridrinks</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ NIEUWSBRIEF ============ -->
+  <section class="g-stack" style="background: #DFEBD2; padding: 34px clamp(20px, 5vw, 64px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 30px; align-items: center">
+    <div style="display: flex; gap: 20px; align-items: flex-start">
+      <span style="flex: none; font-size: 30px; line-height: 1; color: #0B4228">&#9993;</span>
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 18px; color: #0B4228; margin-bottom: 6px">Blijf op de hoogte</div>
+        <p style="font-size: 14px; line-height: 1.6; color: #45603E; margin: 0; max-width: 340px">Ontvang als eerste onze nieuwe smaken, acties en waar je ons deze zomer kunt vinden.</p>
+      </div>
+    </div>
+    <div><form id="news-form" style="display: flex; gap: 12px; flex-wrap: wrap">
+        <input type="email" required="" placeholder="Jouw e-mailadres" style="flex: 1 1 220px; min-width: 0; border: none; border-radius: 999px; padding: 16px 22px; font-family: Karla, sans-serif; font-size: 15px; color: #123A24; background: #FFFFFF" />
+        <button class="b3d b3d-g" type="submit" style="display: inline-flex; align-items: center; gap: 10px; border: none; cursor: pointer; background: #0B4228; color: #FFFFFF; font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; padding: 16px 30px; border-radius: 999px">Aanmelden <span>&#8594;</span></button>
+      </form>
+    <div id="news-ok" hidden style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 16px; color: #0B4228">Bedankt! Je staat op de lijst. &#127819;</div></div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer style="background: #093A23; padding: 48px clamp(20px, 5vw, 64px) 26px">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 32px; align-items: start; padding-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.14)">
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; flex-direction: column; gap: 2px">
+          <span style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 28px; line-height: 1; color: #FFFFFF; letter-spacing: -0.02em">Patty's</span>
+          <span style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 11px; letter-spacing: 0.26em; color: #FFD029">SURI DRINKS</span>
+        </div>
+        <p style="font-size: 13px; line-height: 1.6; color: rgba(255,255,255,0.7); margin: 0; max-width: 230px">Authentieke Surinaamse drankjes, ambachtelijk gemaakt in Lelystad.</p>
+        <div style="font-family: Caveat, cursive; font-size: 22px; line-height: 1.2; color: #FFD029">Good drinks.<br />Bigger smiles.</div>
+      </div>
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.18em; color: #FFD029; margin-bottom: 14px">SHOP</div>
+        <nav style="display: flex; flex-direction: column; gap: 10px">
+          <a href="#smaken" style="color: rgba(255,255,255,0.9); font-size: 14px">Onze smaken</a>
+          <a href="#bestel" style="color: rgba(255,255,255,0.9); font-size: 14px">Bulk bestellen</a>
+          <a href="#zakelijk" style="color: rgba(255,255,255,0.9); font-size: 14px">Zakelijk &amp; staffelprijzen</a>
+          <a href="#info" style="color: rgba(255,255,255,0.9); font-size: 14px">Bezorgen &amp; FAQ</a>
+        </nav>
+      </div>
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.18em; color: #FFD029; margin-bottom: 14px">PATTY'S</div>
+        <nav style="display: flex; flex-direction: column; gap: 10px">
+          <a href="#verhaal" style="color: rgba(255,255,255,0.9); font-size: 14px">Ons verhaal</a>
+          <a href="#oorsprong" style="color: rgba(255,255,255,0.9); font-size: 14px">Onze roots</a>
+          <a href="#volg" style="color: rgba(255,255,255,0.9); font-size: 14px">Volg ons</a>
+        </nav>
+      </div>
+      <div>
+        <div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.18em; color: #FFD029; margin-bottom: 14px">CONTACT</div>
+        <div style="display: flex; flex-direction: column; gap: 10px; font-size: 14px; color: rgba(255,255,255,0.9)">
+          <a href="mailto:info@pattysurishop.nl" style="color: rgba(255,255,255,0.9)">info@pattysurishop.nl</a>
+          <span>Lelystad, Nederland</span>
+          <div style="display: flex; gap: 10px; margin-top: 4px">
+            <a class="b3d b3d-ow" href="#volg" style="width: 34px; height: 34px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">IG</a>
+            <a class="b3d b3d-ow" href="#volg" style="width: 34px; height: 34px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">f</a>
+            <a class="b3d b3d-ow" href="#volg" style="width: 34px; height: 34px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">TT</a>
+            <a class="b3d b3d-ow" href="#volg" style="width: 34px; height: 34px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.45); color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700">YT</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 18px">
+      <span style="font-size: 12px; color: rgba(255,255,255,0.6)">&copy; 2026 Patty's Suri Drinks. Alle rechten voorbehouden. &middot; KvK <span class="todo" style="font-size: 11px">aanvullen</span> &middot; btw <span class="todo" style="font-size: 11px">aanvullen</span></span>
+      <span style="display: flex; gap: 16px; font-size: 12px; flex-wrap: wrap"><a href="#volg" style="color: rgba(255,255,255,0.6)">Privacy</a><a href="#volg" style="color: rgba(255,255,255,0.6)">Algemene voorwaarden</a><a href="#volg" style="color: rgba(255,255,255,0.6)">Retourbeleid</a><a href="#volg" style="color: rgba(255,255,255,0.6)">Cookies</a></span>
+    </div>
+  </footer>
+
+  <!-- ============ WINKELWAGEN ============ -->
+  <div id="cart" hidden>
+    <div data-act="close-cart" style="position: fixed; inset: 0; background: rgba(6,30,18,0.55); z-index: 60"></div>
+    <aside role="dialog" aria-modal="true" aria-label="Winkelwagen" style="position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100%); background: #F6F4E4; z-index: 61; display: flex; flex-direction: column; box-shadow: -20px 0 60px rgba(0,0,0,0.25)">
+      <div style="display: flex; align-items: center; justify-content: space-between; padding: 22px 24px; background: #0B4228; color: #FFFFFF">
+        <div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 22px">Winkelwagen</div>
+        <button class="b3d b3d-ow" type="button" data-act="close-cart" aria-label="Sluiten" style="width: 38px; height: 38px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,0.5); color: #FFFFFF; font-size: 18px; cursor: pointer">&#10005;</button>
+      </div>
+      <div id="cart-body" style="flex: 1; overflow-y: auto; padding: 18px 24px"></div>
+      <div id="cart-foot" style="padding: 20px 24px 24px; border-top: 1px solid #E0DCC4; background: #FFFFFF"></div>
+    </aside>
+  </div>
+  <div id="toast" role="status" aria-live="polite"></div>
+</main>
+
+<button id="fab" class="b3d b3d-y" type="button" data-act="open-cart" aria-label="Open winkelwagen">Winkelwagen <b id="fab-count">0</b></button>
+<script>
+(function () {
+  "use strict";
+  var EMAIL = "info@pattysurishop.nl";
+  var PRODUCTS = [
+    { id: "markoesa", name: "Markoesa", tag: "Proef de zon! · Bestseller", color: "#5B1E58", liquid: ["#FFE066", "#F2B705"],
+      desc: "Tropisch lekker, vol passievrucht. Zomer in een flesje, puur en verfrissend.",
+      tiers: { "330 ml": [[1, 3.5], [30, 1.8], [181, 1.7]], "1 L": [[1, 6], [24, 3.7], [121, 3.4]], "5 L": [[1, 25], [6, 23.5], [21, 22]] } },
+    { id: "zuurwater", name: "Zuurwater", tag: "Heerlijk verfrissend!", color: "#7FA02E", liquid: ["#F1F7C8", "#C9DC6A"],
+      desc: "Fris & zuur, smaakt zomers. Een Surinaamse klassieker die je geproefd moet hebben.",
+      tiers: { "330 ml": [[1, 3.25], [30, 1.6], [181, 1.5]], "1 L": [[1, 5.5], [24, 3.3], [121, 3.1]], "5 L": [[1, 24], [6, 21.5], [21, 20]] } },
+    { id: "cola", name: "Cola-limonade", tag: "Cola. Maar dan beter.", color: "#6E1616", liquid: ["#FF5A5F", "#C8102E"],
+      desc: "Ice cold, 100% smaak. Een Surinaamse twist op een tijdloze favoriet.",
+      tiers: { "330 ml": [[1, 2.75], [30, 1.35], [181, 1.25]], "1 L": [[1, 4.5], [24, 2.8], [121, 2.6]], "5 L": [[1, 15.5], [6, 14], [21, 12.5]] } },
+    { id: "gember", name: "Gemberbier", tag: "0% alcohol, 100% smaak", color: "#D2501A", liquid: ["#FFB27A", "#F0662B"],
+      desc: "Fris, kruidig & dorstlessend. Authentiek Surinaams gemberbier, onweerstaanbaar pittig.",
+      tiers: { "330 ml": [[1, 3.25], [30, 1.8], [91, 1.6], [181, 1.5]], "1 L": [[1, 5.5], [24, 3.3], [121, 3.1]], "5 L": [[1, 24], [6, 21.5], [21, 20]] } }
+  ];
+  var BY_ID = {};
+  PRODUCTS.forEach(function (p) { BY_ID[p.id] = p; });
+  var EMPTIES = [
+    { id: "fles-033", name: "Lege fles", size: "0,33 L", price: 0.55 },
+    { id: "fles-1", name: "Lege fles", size: "1 L", price: 0.75 },
+    { id: "fles-5", name: "Lege fles", size: "5 L", price: 3.8 }
+  ];
+  var STORY = [
+    ["KWAKU ZOMERFESTIVAL", "Het begon met een teleurstelling", "Op het Kwaku Zomerfestival in Amsterdam-Zuidoost kochten we gember van een bekend merk. Eerlijk gezegd vonden we er niets aan. Dus lengden we het aan met Borgo, en opeens hadden we iets dat wél smaakte. Dat moment liet ons nooit meer los."],
+    ["GEMBER ZOALS THUIS", "Een beetje van dit, een beetje van dat", "Patty maakte thuis al jaren haar eigen gember, voor familie, vrienden en kennissen. Geen weegschaal, geen recept, wel altijd lekker. Een bekende met een snackmobiel proefde het en wilde het meteen verkopen. Via hem belandde het zelfs op een vaste kraam op de markt in Amsterdam."],
+    ["VAN HOBBY NAAR RECEPT", "We zijn gek als we hier niets mee doen", "De vraag was er gewoon. Dus zetten we alles op papier: vaste hoeveelheden water, suiker en ingrediënten. Aan de keukentafel bleven we sleutelen, met meer gemberwortel en een langer trekproces. Van zes naar tien naar twaalf uur. Twaalf uur is tot vandaag onze standaard."],
+    ["MEER DAN GEMBERBIER", "Cola-limonade, markoesa en zuurwater", "Patty's cola-limonade kreeg ook een vast recept, en daarna volgde de markoesa. Die is inmiddels onze bestseller. Toch blijft gemberbier het hart van het merk: het meest bewerkelijk, en het meest eigen."],
+    ["VANDAAG", "Een echt familiebedrijf", "Wat begon aan een keukentafel in Lelystad, is uitgegroeid tot een familiebedrijf. We maken onze dranken nog steeds zoals we ze zelf willen drinken: authentiek, ambachtelijk en met de Surinaamse keuken als basis."]
+  ];
+
+  // ---------- helpers ----------
+  function eur(n) { return "€" + n.toFixed(2).replace(".", ","); }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+  function unitPrice(tiers, qty) { var p = tiers[0][1]; tiers.forEach(function (t) { if (qty >= t[0]) p = t[1]; }); return p; }
+  function nextTier(tiers, qty) { for (var i = 0; i < tiers.length; i++) if (tiers[i][0] > qty) return tiers[i]; return null; }
+  function store(k, v) { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "null"); localStorage.setItem(k, JSON.stringify(v)); } catch (e) { return null; } }
+
+  // ---------- bottle illustration ----------
+  var bottleN = 0;
+  function bottleSVG(id, opts) {
+    var p = BY_ID[id]; var g = "lq" + (bottleN++);
+    var big = opts && opts.big;
+    return '<svg viewBox="0 0 120 300" role="img" aria-label="Fles Patty\'s ' + esc(p.name) + '" class="bottle-svg">' +
+      '<defs><linearGradient id="' + g + '" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="' + p.liquid[0] + '"/><stop offset="1" stop-color="' + p.liquid[1] + '"/></linearGradient>' +
+      '<linearGradient id="' + g + 's" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".35" stop-color="#fff" stop-opacity="0"/><stop offset=".8" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".18"/></linearGradient></defs>' +
+      '<ellipse cx="60" cy="292" rx="44" ry="6" fill="#000" opacity=".22"/>' +
+      '<rect x="38" y="6" width="44" height="30" rx="6" fill="#F4F2EA"/><rect x="38" y="30" width="44" height="6" fill="#DAD6C8"/>' +
+      '<path d="M44 36 h32 v18 c0 10 22 16 22 40 v170 c0 14 -8 22 -22 22 h-32 c-14 0 -22 -8 -22 -22 v-170 c0 -24 22 -30 22 -40z" fill="url(#' + g + ')"/>' +
+      '<path d="M44 36 h32 v18 c0 10 22 16 22 40 v170 c0 14 -8 22 -22 22 h-32 c-14 0 -22 -8 -22 -22 v-170 c0 -24 22 -30 22 -40z" fill="url(#' + g + 's)"/>' +
+      '<rect x="26" y="132" width="68" height="78" rx="8" fill="#FFFDF5" opacity=".95"/>' +
+      '<text x="60" y="160" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="17" fill="#0B4228">Patty\'s</text>' +
+      '<text x="60" y="174" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="800" font-size="6.5" letter-spacing="1.6" fill="#C9970A">SURI DRINKS</text>' +
+      '<text x="60" y="194" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="' + Math.min(11, 60 / (p.name.length * 0.72)).toFixed(1) + '" fill="' + p.color + '">' + esc(p.name.toUpperCase()) + '</text>' +
+      (big ? '<circle cx="40" cy="232" r="3" fill="#fff" opacity=".5"/><circle cx="52" cy="250" r="2" fill="#fff" opacity=".5"/><circle cx="76" cy="226" r="2.5" fill="#fff" opacity=".45"/>' : '') +
+      '</svg>';
+  }
+  function paintBottles() {
+    document.querySelectorAll("[data-bottle]").forEach(function (el) { el.innerHTML = bottleSVG(el.getAttribute("data-bottle")); });
+    document.querySelectorAll("[data-bottles]").forEach(function (el) {
+      el.innerHTML = el.getAttribute("data-bottles").split(",").map(function (id, i) { return '<div class="gb gb' + i + '">' + bottleSVG(id, { big: true }) + "</div>"; }).join("");
+    });
+  }
+
+  // ---------- state ----------
+  var sel = {};
+  PRODUCTS.forEach(function (p) { sel[p.id] = { size: "330 ml", qty: p.tiers["330 ml"][1][0] }; });
+  var cart = store("pattys-cart") || [];
+  if (!Array.isArray(cart)) cart = [];
+
+  function linePrice(l) {
+    if (l.kind === "empty") return { unit: l.price, base: l.price, next: null };
+    var p = BY_ID[l.pid]; if (!p) return { unit: 0, base: 0, next: null };
+    var t = p.tiers[l.size];
+    return { unit: unitPrice(t, l.qty), base: t[0][1], next: nextTier(t, l.qty) };
+  }
+
+  // ---------- shop ----------
+  function renderShop() {
+    var html = PRODUCTS.map(function (p) {
+      var s = sel[p.id], tiers = p.tiers[s.size], unit = unitPrice(tiers, s.qty), base = tiers[0][1];
+      var next = nextTier(tiers, s.qty);
+      var prevMin = tiers.filter(function (t) { return t[0] <= s.qty; }).pop()[0];
+      var pct = Math.round((1 - unit / base) * 100);
+      var progress = next ? Math.max(4, Math.round(((s.qty - prevMin) / (next[0] - prevMin)) * 100)) : 100;
+      var hint = next ? "Nog " + (next[0] - s.qty) + " stuks voor " + eur(next[1]) + " per stuk (−" + Math.round((1 - next[1] / base) * 100) + "%)" : "Top! Je betaalt de laagste bulkprijs: " + eur(unit) + " per stuk";
+      var sizes = Object.keys(p.tiers).map(function (k) {
+        return '<button type="button" class="pill-btn' + (k === s.size ? " on" : "") + '" data-act="size" data-id="' + p.id + '" data-v="' + k + '" aria-pressed="' + (k === s.size) + '">' + k + "</button>";
+      }).join("");
+      var chips = tiers.map(function (t, i) {
+        var upper = tiers[i + 1] ? tiers[i + 1][0] - 1 : Infinity;
+        var on = s.qty >= t[0] && s.qty <= upper;
+        return '<button type="button" class="tier-chip' + (on ? " on" : "") + '" data-act="chip" data-id="' + p.id + '" data-v="' + t[0] + '" aria-pressed="' + on + '"><b>' + (upper === Infinity ? t[0] + "+" : t[0] + "–" + upper) + "</b><small>" + eur(t[1]) + "</small></button>";
+      }).join("");
+      return '<article class="shop-card">' +
+        '<div style="height: 10px; background: ' + p.color + '"></div>' +
+        (pct > 0 ? '<span class="save-badge">−' + pct + "%</span>" : "") +
+        '<div class="shop-inner">' +
+          '<div style="display: flex; gap: 14px; align-items: flex-start; padding-right: 52px"><div class="mini-bottle">' + bottleSVG(p.id) + '</div><div>' +
+            '<div style="font-size: 13px; font-weight: 700; color: #C9970A; margin-bottom: 4px">' + esc(p.tag) + "</div>" +
+            '<h3 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 22px; color: #0B4228; margin: 0">' + esc(p.name) + "</h3>" +
+            '<p style="font-size: 14px; line-height: 1.55; color: #56664A; margin: 6px 0 0">' + esc(p.desc) + "</p></div></div>" +
+          '<div style="display: flex; gap: 8px; flex-wrap: wrap" role="group" aria-label="Formaat">' + sizes + "</div>" +
+          '<div><div class="mini-label">BULKPAKKET &middot; PRIJS PER STUK</div><div style="display: flex; gap: 6px" role="group" aria-label="Bulkpakket">' + chips + "</div></div>" +
+          '<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px">' +
+            '<div style="display: flex; align-items: center; gap: 6px">' +
+              '<button type="button" class="step-btn" data-act="dec" data-id="' + p.id + '" aria-label="Minder">&minus;</button>' +
+              '<input class="qty-input" type="number" min="1" inputmode="numeric" value="' + s.qty + '" data-qty="' + p.id + '" aria-label="Aantal ' + esc(p.name) + '" />' +
+              '<button type="button" class="step-btn" data-act="inc" data-id="' + p.id + '" aria-label="Meer">+</button>' +
+            "</div>" +
+            '<div style="text-align: right"><div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 22px; color: #0B4228">' + eur(unit * s.qty) + '</div><div style="font-size: 12px; color: #6B7A4F">' + eur(unit) + " per stuk</div></div>" +
+          "</div>" +
+          '<div class="hint-box"><div style="font-size: 12px; line-height: 1.45; color: #0B4228; font-weight: 700">' + hint + '</div>' +
+            '<div class="bar"><div style="width: ' + progress + '%"></div></div>' +
+            (pct > 0 ? '<div style="font-size: 12px; color: #2E7D32; font-weight: 700; margin-top: 8px">Je bespaart ' + eur((base - unit) * s.qty) + " t.o.v. losse flessen</div>" : "") +
+          "</div>" +
+          '<button type="button" class="b3d b3d-g add-btn" data-act="add" data-id="' + p.id + '">' + s.qty + " stuks in winkelwagen <span>+</span></button>" +
+        "</div></article>";
+    }).join("");
+    document.getElementById("shop-grid").innerHTML = html;
+  }
+  function setSel(id, patch) {
+    var focused = document.activeElement && document.activeElement.getAttribute("data-qty");
+    Object.assign(sel[id], patch); renderShop();
+    if (focused) { var el = document.querySelector('[data-qty="' + focused + '"]'); if (el) { el.focus(); var v = el.value; el.value = ""; el.value = v; } }
+  }
+
+  // ---------- cart ----------
+  function saveCart() { store("pattys-cart", cart); }
+  function addToCart(key, item, qty) {
+    var l = cart.find(function (x) { return x.key === key; });
+    if (l) l.qty += qty; else cart.push(Object.assign({ key: key, qty: qty }, item));
+    saveCart(); renderCart(); toast(qty + "× " + item.name + " (" + item.size + ") toegevoegd");
+  }
+  function changeLine(key, d) {
+    cart = cart.map(function (l) { return l.key === key ? Object.assign({}, l, { qty: l.qty + d }) : l; }).filter(function (l) { return l.qty > 0; });
+    saveCart(); renderCart();
+  }
+  function orderText() {
+    var sub = 0;
+    var lines = cart.map(function (l) { var pr = linePrice(l); sub += pr.unit * l.qty; return "- " + l.qty + "x " + l.name + " (" + l.size + ") à " + eur(pr.unit) + " = " + eur(pr.unit * l.qty); });
+    return "Hallo Patty's,\n\nIk wil graag bestellen:\n\n" + lines.join("\n") + "\n\nSubtotaal: " + eur(sub) + "\n\nNaam:\nAdres:\nTelefoon:\nBezorgen of ophalen:\n";
+  }
+  function renderCart() {
+    var count = 0, sub = 0, baseTot = 0;
+    var body = cart.map(function (l) {
+      var pr = linePrice(l); count += l.qty; sub += pr.unit * l.qty; baseTot += pr.base * l.qty;
+      return '<div class="cart-line"><span style="flex: none; width: 12px; height: 46px; border-radius: 999px; background: ' + l.color + '"></span>' +
+        '<div style="flex: 1; min-width: 0"><div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 16px; color: #0B4228">' + esc(l.name) + '</div>' +
+        '<div style="font-size: 13px; color: #6B7A4F">' + esc(l.size) + " &middot; " + eur(pr.unit) + " p/st</div>" +
+        '<div style="display: flex; align-items: center; gap: 6px; margin-top: 8px">' +
+          '<button type="button" class="step-btn sm" data-act="line" data-key="' + esc(l.key) + '" data-v="-1" aria-label="Minder">&minus;</button>' +
+          '<span style="min-width: 30px; text-align: center; font-family: Nunito, sans-serif; font-weight: 800; color: #0B4228">' + l.qty + "</span>" +
+          '<button type="button" class="step-btn sm" data-act="line" data-key="' + esc(l.key) + '" data-v="1" aria-label="Meer">+</button>' +
+          '<button type="button" class="link-btn" data-act="line" data-key="' + esc(l.key) + '" data-v="' + -l.qty + '">Verwijder</button></div>' +
+        (pr.next ? '<div class="upsell"><span style="flex: 1">Nog ' + (pr.next[0] - l.qty) + " voor " + eur(pr.next[1]) + ' p/st</span><button type="button" class="tier-chip on up" data-act="line" data-key="' + esc(l.key) + '" data-v="' + (pr.next[0] - l.qty) + '">+' + (pr.next[0] - l.qty) + "</button></div>" : "") +
+        '</div><div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 16px; color: #0B4228">' + eur(pr.unit * l.qty) + "</div></div>";
+    }).join("");
+    if (!cart.length) body = '<div style="text-align: center; padding: 60px 10px"><div style="width: 90px; margin: 0 auto">' + bottleSVG("markoesa") + '</div><div style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 20px; color: #0B4228; margin: 12px 0 6px">Je winkelwagen is leeg</div><p style="font-size: 14px; color: #56664A; margin: 0 0 22px">Voeg iets lekkers toe, in bulk is het voordeliger!</p><a class="b3d b3d-y cta-y" href="#bestel" data-act="close-cart">Naar bulk bestellen <span>&#8594;</span></a></div>';
+    document.getElementById("cart-body").innerHTML = body;
+    var save = baseTot - sub;
+    document.getElementById("cart-foot").hidden = !cart.length;
+    document.getElementById("cart-foot").innerHTML = cart.length ?
+      '<div style="display: flex; justify-content: space-between; font-size: 15px; color: #47563C; margin-bottom: 6px"><span>Subtotaal</span><span style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 20px; color: #0B4228">' + eur(sub) + "</span></div>" +
+      (save > 0.004 ? '<div style="font-size: 13px; color: #2E7D32; font-weight: 700; margin-bottom: 6px">Je bespaart ' + eur(save) + " met bulkprijzen &#127881;</div>" : "") +
+      '<div style="font-size: 12px; color: #6B7A4F; margin-bottom: 16px">Incl. btw. Verzendkosten <span class="todo" style="font-size: 11px">aanvullen</span></div>' +
+      '<a class="b3d b3d-y cta-y" style="display: flex; justify-content: center" href="mailto:' + EMAIL + "?subject=" + encodeURIComponent("Bestelling Patty's Suri Drinks") + "&body=" + encodeURIComponent(orderText()) + '">Bestelling mailen <span>&#8594;</span></a>' +
+      '<button type="button" class="b3d b3d-o ghost-btn" data-act="copy">Kopieer bestelling</button>' +
+      '<p style="font-size: 12px; color: #6B7A4F; text-align: center; margin: 10px 0 0; line-height: 1.5">Opent je mailprogramma niet? Kopieer je bestelling en mail hem naar <b>' + EMAIL + '</b>. <span class="todo" style="font-size: 11px">later: online afrekenen</span></p>' : "";
+    document.getElementById("cart-count").textContent = count; document.getElementById("fab-count").textContent = count;
+  }
+  var lastFocus = null;
+  function openCart() { document.getElementById("toast").classList.remove("show"); lastFocus = document.activeElement; document.getElementById("cart").hidden = false; document.body.style.overflow = "hidden"; var b = document.querySelector('#cart [aria-label="Sluiten"]'); if (b) b.focus(); }
+  function closeCart() { document.getElementById("cart").hidden = true; document.body.style.overflow = ""; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+
+  var toastT;
+  function toast(msg) {
+    var t = document.getElementById("toast");
+    t.innerHTML = '<span>' + esc(msg) + '</span><button type="button" data-act="open-cart">Bekijk winkelwagen</button>';
+    t.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(function () { t.classList.remove("show"); }, 3200);
+  }
+
+  // ---------- static lists ----------
+  function renderStatic() {
+    document.getElementById("empties").innerHTML = EMPTIES.map(function (e) {
+      return '<div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; background: #F6F4E4; border-radius: 14px; padding: 12px 14px"><div><div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 15px; color: #0B4228">' + e.name + " " + e.size + '</div><div style="font-size: 13px; color: #6B7A4F">' + eur(e.price) + '</div></div><button type="button" class="step-btn" data-act="empty" data-id="' + e.id + '" aria-label="' + e.name + " " + e.size + ' toevoegen">+</button></div>';
+    }).join("");
+    document.getElementById("story").innerHTML = STORY.map(function (s, i) {
+      return '<div style="position: relative" class="reveal"><span class="story-dot">' + (i + 1) + '</span><div style="font-family: Nunito, sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.18em; color: #C9970A; margin-bottom: 6px">' + s[0] + '</div><h3 style="font-family: Nunito, sans-serif; font-weight: 900; font-size: 22px; color: #0B4228; margin: 0 0 8px">' + esc(s[1]) + '</h3><p style="font-size: 15px; line-height: 1.75; color: #47563C; margin: 0">' + esc(s[2]) + "</p></div>";
+    }).join("");
+    document.getElementById("tier-rows").innerHTML = PRODUCTS.map(function (p) {
+      var t = p.tiers, s = t["330 ml"];
+      var cells = [eur(s[0][1]), eur(s[1][1]) + (p.id === "gember" ? "*" : ""), eur(s[s.length - 1][1])];
+      ["1 L", "5 L"].forEach(function (k) { t[k].forEach(function (x) { cells.push(eur(x[1])); }); });
+      return "<tr><td>" + p.name + "</td>" + cells.map(function (c) { return "<td>" + c + "</td>"; }).join("") + "</tr>";
+    }).join("");
+  }
+
+  // ---------- events ----------
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-act]"); if (!b) return;
+    var a = b.getAttribute("data-act"), id = b.getAttribute("data-id"), v = b.getAttribute("data-v");
+    if (a === "size") setSel(id, { size: v, qty: BY_ID[id].tiers[v][1][0] });
+    else if (a === "chip") setSel(id, { qty: +v });
+    else if (a === "dec") setSel(id, { qty: Math.max(1, sel[id].qty - 1) });
+    else if (a === "inc") setSel(id, { qty: sel[id].qty + 1 });
+    else if (a === "add") { var p = BY_ID[id], s = sel[id]; addToCart(id + "|" + s.size, { kind: "drink", pid: id, name: p.name, size: s.size, color: p.color }, s.qty); }
+    else if (a === "empty") { var em = EMPTIES.find(function (x) { return x.id === id; }); addToCart(em.id, { kind: "empty", name: em.name, size: em.size, price: em.price, color: "#C9C4A8" }, 1); }
+    else if (a === "line") changeLine(b.getAttribute("data-key"), +v);
+    else if (a === "open-cart") { e.preventDefault(); openCart(); }
+    else if (a === "close-cart") { if (b.tagName !== "A") e.preventDefault(); closeCart(); }
+    else if (a === "copy") {
+      var txt = orderText();
+      try { navigator.clipboard.writeText(txt).then(function () { b.textContent = "Gekopieerd ✓"; }, function () { b.textContent = "Kopiëren lukt niet, mail ons direct"; }); }
+      catch (err) { b.textContent = "Kopiëren lukt niet, mail ons direct"; }
+    }
+  });
+  document.addEventListener("change", function (e) {
+    var id = e.target.getAttribute && e.target.getAttribute("data-qty"); if (!id) return;
+    var n = parseInt(e.target.value, 10); setSel(id, { qty: isNaN(n) || n < 1 ? 1 : n });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !document.getElementById("cart").hidden) closeCart();
+    if (e.key === "Enter" && e.target.getAttribute && e.target.getAttribute("data-qty")) e.target.blur();
+  });
+  document.getElementById("news-form").addEventListener("submit", function (e) {
+    e.preventDefault(); this.hidden = true; document.getElementById("news-ok").hidden = false;
+  });
+
+  // ---------- parallax + reveal ----------
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!reduce) {
+    var raf = null;
+    var tick = function () {
+      raf = null; var vh = window.innerHeight || 800;
+      document.querySelectorAll("[data-parallax]").forEach(function (el) {
+        var sp = parseFloat(el.getAttribute("data-parallax")) || 0, r = el.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) return;
+        el.style.transform = "translate3d(0," + (((r.top + r.height / 2 - vh / 2) / vh) * sp * 100).toFixed(2) + "px,0)";
+      });
+    };
+    var onS = function () { if (raf === null) raf = requestAnimationFrame(tick); };
+    window.addEventListener("scroll", onS, { passive: true }); window.addEventListener("resize", onS); onS();
+  }
+
+  var fabEl = document.getElementById("fab");
+  window.addEventListener("scroll", function () { fabEl.classList.toggle("show", window.scrollY > 700); }, { passive: true });
+  paintBottles(); renderStatic(); renderShop(); renderCart();
+})();
+
+</script>
+</body>
+</html>
